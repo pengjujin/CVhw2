@@ -1,9 +1,14 @@
 load('result.mat');
 load('dataset.mat');
-correct = 0;
+ecorrect = 0;
+xcorrect = 0;
 for i = 1:length(testPaths)
-  if(testLabels(i) == result(i))
-    correct = correct+1;
+  if(testLabels(i) == euclidean_result(i))
+    ecorrect = ecorrect+1;
+  end
+  if(testLabels(i) == x2_result(i))
+    xcorrect = xcorrect+1;
   end
 end
-disp(correct);
+disp(ecorrect);
+disp(xcorrect);

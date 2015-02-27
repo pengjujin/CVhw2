@@ -9,7 +9,24 @@ x2_result = [];
     wordMap = getVisualWords(img, dictionary);
     img_hist = getImageFeatures(wordMap, size(dictionary, 1));
     euclid_close = pdist2(img_hist, trainFeatures, 'euclidean');
-    [M ind] = min(euclid_close);
-    euclidean_result = [euclidean_result; trainLabels(ind)];
+    %%%%% implementing chi-square distance
+
+    m = size(img_hist,1);  n = size(trainFeatures,1);
+    mOnes = ones(1,m); D = zeros(m,n);
+    for i=1:n
+      yi = trainFeatures(i,:);  
+      yiRep = yi( mOnes, : );
+      s = yiRep + img_hist;    
+      d = yiRep - img_hist;
+      x2_close(:,i) = sum( d.^2 ./ (s+eps), 2 );
+    end
+    x2_close = x2_close/2;
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    [S euc_ind] = min(euclid_close);
+    [K x2_ind] = min(x2_close);
+    euclidean_result = [euclidean_result; trainLabels(euc_ind)];
+    x2_result = [x2_result; trainLabels(x2_ind)];
   end
 save results x2_result euclidean_result;
