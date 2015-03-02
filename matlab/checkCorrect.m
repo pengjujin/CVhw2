@@ -1,4 +1,4 @@
-load('result.mat');
+load('results.mat');
 load('dataset.mat');
 ecorrect = 0;
 xcorrect = 0;

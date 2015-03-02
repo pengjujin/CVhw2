@@ -3,7 +3,7 @@
 % Batch script to compute and save word maps for all images.
 
 % set the number of parallel workers
-numOfCores = 4;
+numOfCores = 6;
 
 %*******************************************
 %     STOP! DO NOT MODIFY CODE BELOW!      %
@@ -15,14 +15,15 @@ target = '../wordmaps/';
 % close current pools
 try
     fprintf('Closing any pools...if any\n');
-    delete(gcp('nocreate'))
+    %delete(gcp('nocreate'))
+    matlabpool close
 catch ME
     disp(ME.message);
 end
 
 fprintf('Starting a pool of workers with %d cores\n', numOfCores);
-parpool('local',numOfCores);
-
+%parpool('local',numOfCores);
+matlabpool('local',numOfCores);
 %load data
 load('dataset.mat','allPaths', 'categories');
 load('dictionary.mat','dictionary');
