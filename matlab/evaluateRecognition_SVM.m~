@@ -1,0 +1,22 @@
+load('vision.mat');
+load('dataset.mat');
+source = '../images/';
+numLabels = 8;
+model = cell(numLabels, 1);
+for k = 1:numLabels
+    model{k} = svmtrain(double(trainLabels==k),trainFeatures,'-b 1 -t 0 -q');
+end
+
+img_path = [source, trainPaths{3}];
+img = imread(img_path);
+wordMap = getVisualWords(img, dictionary);
+img_hist = getImageFeatures(wordMap, size(dictionary, 1));
+
+prob = zeros(200, numLabels);
+for k=1:numLabels
+    [predict,accur,p]=svmpredict(double(trainLabels==k), trainFeatures, model{k}, '-b 1');
+%     prob(:,k)=p(:,model{k}.Label==1);
+end
+[~,pred]=max(prob,[],2);
+
+disp(pred);
