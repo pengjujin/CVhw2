@@ -29,4 +29,6 @@ x2_result = [];
     euclidean_result = [euclidean_result; trainLabels(euc_ind)];
     x2_result = [x2_result; trainLabels(x2_ind)];
   end
-save results x2_result euclidean_result;
+
+  [C_euclidean d1] = confusionmat(testLabels, euclidean_result);
+  [C_x2 d2] = confusionmat(testLabels, x2_result);

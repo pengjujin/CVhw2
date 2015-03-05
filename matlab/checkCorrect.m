@@ -10,5 +10,9 @@ for i = 1:length(testPaths)
     xcorrect = xcorrect+1;
   end
 end
-disp(ecorrect);
-disp(xcorrect);
+[c_euclid, order]=confusionmat(testLabels, euclidean_result);
+[c_x2, order]=confusionmat(testLabels, x2_result);
+disp(c_euclid);
+disp(c_x2);
+disp(ecorrect/length(testPaths));
+disp(xcorrect/length(testPaths));
